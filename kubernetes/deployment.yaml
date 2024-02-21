@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: PublisherService
+  name: PublisherService
+  labels:
+    app: PublisherService
+spec:
+  selector:
+    matchLabels:
+      app: PublisherService
+  template:
+    metadata:
+      labels:
+        app: PublisherService
+        name: PublisherService
+    spec:
+      containers:
+        - name: PublisherService
+          image: MrAzharuddin/book-store-backend/PublisherService
+          imagePullPolicy: Always
+          ports:
+        
+          - containerPort: 8002
+            name: http
+        
+        
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 30
+        
